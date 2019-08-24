@@ -1,0 +1,80 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    width:100%;
+    height: 100%;
+    background-color: green;
+}
+
+#field {
+    display: grid;
+    grid-template-columns: repeat(15, 60px);
+    grid-template-rows: repeat(15, 60px);
+    box-sizing: border-box;
+    margin: auto;
+    padding:0;
+    font-size: 0;
+}
+
+.grass {
+    background: url("img/field/grass.png") 100% 100% no-repeat;
+    background-size: cover;
+}
+.wall {
+    background: url("img/field/wall.png") 100% 100% no-repeat;
+    background-size: cover;
+}
+.brick {
+    background: url("img/field/brick.png") 100% 100% no-repeat;
+    background-size: cover;
+}
+.explosion {
+    background: url("img/field/explosion.gif") 100% 100% no-repeat;
+    background-size: cover;
+}
+
+#bomb {
+    background: url("img/field/bomb.png") 100% 100% no-repeat;
+    background-size: cover;
+}
+#bomberman-bomb{
+    background: url("img/bomberman/bomberman-bomb.png") 100% 100% no-repeat;
+    background-size: cover;
+}
+
+.bomberman-up {
+    background: url("img/bomberman/bomberman-up.png") 100% 100% no-repeat;
+    background-size: cover;
+}
+.bomberman-down {
+    background: url("img/bomberman/bomberman-down.png") 100% 100% no-repeat;
+    background-size: cover;
+}
+.bomberman-left {
+     background: url("img/bomberman/bomberman-left.png") 100% 100% no-repeat;
+     background-size: cover;
+}
+.bomberman-right {
+      background: url("img/bomberman/bomberman-right.png") 100% 100% no-repeat;
+      background-size: cover;
+}
+
+.enemy-up {
+    background: url("img/enemy/enemy-up.png") 100% 100% no-repeat;
+    background-size: cover;
+}
+.enemy-down {
+    background: url("img/enemy/enemy-down.png") 100% 100% no-repeat;
+    background-size: cover;
+}
+.enemy-left {
+    background: url("img/enemy/enemy-left.png") 100% 100% no-repeat;
+    background-size: cover;
+}
+.enemy-right {
+    background: url("img/enemy/enemy-right.png") 100% 100% no-repeat;
+    background-size: cover;
+}
