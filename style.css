@@ -44,6 +44,10 @@ html, body {
     background: url("img/bomberman/bomberman-bomb.png") 100% 100% no-repeat;
     background-size: cover;
 }
+.grass#door, .bomberman#door{
+    background: url("img/field/door.png") 100% 100% no-repeat;
+    background-size: cover;
+}
 
 .bomberman-up {
     background: url("img/bomberman/bomberman-up.png") 100% 100% no-repeat;

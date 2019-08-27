@@ -1,6 +1,15 @@
 let size = 15;
 let gameLost = false;
+
 let gameWon = () => {
+    return enemiesDead() && doorEntered()
+};
+
+const doorReadytoEnter = () => {
+    return enemiesDead()
+};
+
+const enemiesDead = () => {
     let field = getField(size);
     for (let i = 0; i < field.length; i++) {
         for (let j = 0; j < field.length; j++) {
@@ -12,7 +21,19 @@ let gameWon = () => {
     return true;
 };
 
-let bombAvailable = () =>{
+const doorEntered = () => {
+    let field = getField(size);
+    for (let i = 0; i < field.length; i++) {
+        for (let j = 0; j < field.length; j++) {
+            if (field[i][j].classList.contains("bomberman") && field[i][j].id === "door") {
+                return true;
+            }
+        }
+    }
+    return false;
+};
+
+let bombAvailable = () => {
     let field = getField(size);
     for (let i = 0; i < field.length; i++) {
         for (let j = 0; j < field.length; j++) {
@@ -31,17 +52,21 @@ const generateField = (size) => {
         for (let j = 0; j < size; j++) {
             let c = document.createElement("div");
             (i === 0 || j === 0 || i === size - 1 || j === size - 1 || (!(i % 2) && !((i + j) % 2))) ? c.className = "wall" :
-                (getRandomInt(7) === 0) ? c.className ="brick" : c.className = "grass";
+                (getRandomInt(7) === 0) ? c.className = "brick" : c.className = "grass";
             document.getElementById("field").appendChild(c);
         }
     }
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 3; i++) {
         let d = document.getElementsByClassName("grass")[getRandomInt(document.getElementsByClassName("grass").length)].classList;
         d.remove("grass");
-        d.add("enemy","enemy-down");    }
-    let d = document.getElementsByClassName("grass")[getRandomInt(document.getElementsByClassName("grass").length)].classList;
-    d.remove("grass");
-    d.add("bomberman","bomberman-down");
+        d.add("enemy", "enemy-down");
+    }
+
+    let grassList = document.getElementsByClassName("grass")[getRandomInt(document.getElementsByClassName("grass").length)].classList;
+    grassList.remove("grass");
+    grassList.add("bomberman", "bomberman-down");
+
+    document.getElementsByClassName("brick")[getRandomInt(document.getElementsByClassName("brick").length)].id = "door";
 };
 
 const getField = (size) => {
@@ -64,17 +89,22 @@ const getCoordinates = (block) => {
 const moveDown = (block) => {
     let coordinates = getCoordinates(block);
     let field = getField(size);
+    let destinationBlock = field[coordinates[0] + 1][coordinates[1]];
 
-    if (field[coordinates[0] + 1][coordinates[1]].className === "grass" && field[coordinates[0] + 1][coordinates[1]].id !== "bomb") {
-        field[coordinates[0] + 1][coordinates[1]].classList.replace("grass", block.classList[0]);
-        field[coordinates[0] + 1][coordinates[1]].classList.add(block.classList[0] + "-down");
+    if ((destinationBlock.id === "door" && !doorReadytoEnter()) || destinationBlock.id === "bomb") {
+        return null;
+    }
+    if (destinationBlock.className === "grass") {
+        destinationBlock.classList.replace("grass", block.classList[0]);
+        destinationBlock.classList.add(block.classList[0] + "-down");
         block.className = "grass";
-        if(block.id === "bomberman-bomb") {
+        if (block.id === "bomberman-bomb") {
             block.id = "bomb"
         }
+
     }
-    if((field[coordinates[0] + 1][coordinates[1]].classList.contains("enemy") && block.classList.contains("bomberman"))
-        || (field[coordinates[0] + 1][coordinates[1]].classList.contains("bomberman") && block.classList.contains("enemy"))) {
+    if ((destinationBlock.classList.contains("enemy") && block.classList.contains("bomberman"))
+        || (destinationBlock.classList.contains("bomberman") && block.classList.contains("enemy"))) {
         gameLost = true;
     }
 };
@@ -82,17 +112,21 @@ const moveDown = (block) => {
 const moveUp = (block) => {
     let coordinates = getCoordinates(block);
     let field = getField(size);
+    let destinationBlock = field[coordinates[0] - 1][coordinates[1]];
 
-    if (field[coordinates[0] - 1][coordinates[1]].className === "grass" && field[coordinates[0] - 1][coordinates[1]].id !== "bomb") {
-        field[coordinates[0] - 1][coordinates[1]].classList.replace("grass", block.classList[0]);
-        field[coordinates[0] - 1][coordinates[1]].classList.add(block.classList[0] + "-up");
+    if ((destinationBlock.id === "door" && !doorReadytoEnter()) || destinationBlock.id === "bomb") {
+        return null;
+    }
+    if (destinationBlock.className === "grass") {
+        destinationBlock.classList.replace("grass", block.classList[0]);
+        destinationBlock.classList.add(block.classList[0] + "-up");
         block.className = "grass";
-        if(block.id === "bomberman-bomb") {
+        if (block.id === "bomberman-bomb") {
             block.id = "bomb"
         }
     }
-    if((field[coordinates[0] - 1][coordinates[1]].classList.contains("enemy") && block.classList.contains("bomberman"))
-        || (field[coordinates[0] - 1][coordinates[1]].classList.contains("bomberman") && block.classList.contains("enemy"))) {
+    if ((destinationBlock.classList.contains("enemy") && block.classList.contains("bomberman"))
+        || (destinationBlock.classList.contains("bomberman") && block.classList.contains("enemy"))) {
         gameLost = true;
     }
 };
@@ -100,17 +134,21 @@ const moveUp = (block) => {
 const moveLeft = (block) => {
     let coordinates = getCoordinates(block);
     let field = getField(size);
+    let destinationBlock = field[coordinates[0]][coordinates[1] - 1];
 
-    if (field[coordinates[0]][coordinates[1] - 1].className === "grass" && field[coordinates[0]][coordinates[1] - 1].id !== "bomb") {
-        field[coordinates[0]][coordinates[1] - 1].classList.replace("grass", block.classList[0]);
-        field[coordinates[0]][coordinates[1] - 1].classList.add(block.classList[0] + "-left");
+    if ((destinationBlock.id === "door" && !doorReadytoEnter()) || destinationBlock.id === "bomb") {
+        return null;
+    }
+    if (destinationBlock.className === "grass") {
+        destinationBlock.classList.replace("grass", block.classList[0]);
+        destinationBlock.classList.add(block.classList[0] + "-left");
         block.className = "grass";
-        if(block.id === "bomberman-bomb") {
+        if (block.id === "bomberman-bomb") {
             block.id = "bomb"
         }
     }
-    if((field[coordinates[0]][coordinates[1] - 1].classList.contains("enemy") && block.classList.contains("bomberman"))
-        || (field[coordinates[0]][coordinates[1] - 1].classList.contains("bomberman") && block.classList.contains("enemy"))) {
+    if ((destinationBlock.classList.contains("enemy") && block.classList.contains("bomberman"))
+        || (destinationBlock.classList.contains("bomberman") && block.classList.contains("enemy"))) {
         gameLost = true;
     }
 };
@@ -118,17 +156,21 @@ const moveLeft = (block) => {
 const moveRight = (block) => {
     let coordinates = getCoordinates(block);
     let field = getField(size);
+    let destinationBlock = field[coordinates[0]][coordinates[1] + 1];
 
-    if (field[coordinates[0]][coordinates[1] + 1].className === "grass" && field[coordinates[0]][coordinates[1] + 1].id !== "bomb") {
-        field[coordinates[0]][coordinates[1] + 1].classList.replace("grass", block.classList[0]);
-        field[coordinates[0]][coordinates[1] + 1].classList.add(block.classList[0] + "-right");
+    if ((destinationBlock.id === "door" && !doorReadytoEnter()) || destinationBlock.id === "bomb") {
+        return null;
+    }
+    if (destinationBlock.className === "grass") {
+        destinationBlock.classList.replace("grass", block.classList[0]);
+        destinationBlock.classList.add(block.classList[0] + "-right");
         block.className = "grass";
-        if(block.id === "bomberman-bomb") {
+        if (block.id === "bomberman-bomb") {
             block.id = "bomb"
         }
     }
-    if((field[coordinates[0]][coordinates[1] + 1].classList.contains("enemy") && block.classList.contains("bomberman"))
-        || (field[coordinates[0]][coordinates[1] + 1].classList.contains("bomberman") && block.classList.contains("enemy"))) {
+    if ((destinationBlock.classList.contains("enemy") && block.classList.contains("bomberman"))
+        || (destinationBlock.classList.contains("bomberman") && block.classList.contains("enemy"))) {
         gameLost = true;
     }
 };
@@ -154,13 +196,13 @@ const setBomb = (block) => {
         let coordinates = getCoordinates(block);
 
         destroyBlock(field[coordinates[0]][coordinates[1]]);
-        destroyBlock(field[coordinates[0]-1][coordinates[1]]);
-        destroyBlock(field[coordinates[0]+1][coordinates[1]]);
-        destroyBlock(field[coordinates[0]][coordinates[1]-1]);
-        destroyBlock(field[coordinates[0]][coordinates[1]+1]);
+        destroyBlock(field[coordinates[0] - 1][coordinates[1]]);
+        destroyBlock(field[coordinates[0] + 1][coordinates[1]]);
+        destroyBlock(field[coordinates[0]][coordinates[1] - 1]);
+        destroyBlock(field[coordinates[0]][coordinates[1] + 1]);
     };
 
-    if (bombAvailable()) {
+    if (bombAvailable() && block.id !== "door") {
         block.id = "bomberman-bomb";
         setTimeout(() => explodeBomb(block), 2000)
     }
@@ -168,7 +210,7 @@ const setBomb = (block) => {
 
 document.addEventListener("keydown", (event) =>
     event.which === 39 ? moveRight(document.getElementsByClassName("bomberman")[0]) :
-        event.which ===  37 ? moveLeft(document.getElementsByClassName("bomberman")[0]) :
+        event.which === 37 ? moveLeft(document.getElementsByClassName("bomberman")[0]) :
             event.which === 38 ? moveUp(document.getElementsByClassName("bomberman")[0]) :
                 event.which === 40 ? moveDown(document.getElementsByClassName("bomberman")[0]) :
                     event.which === 32 ? setBomb(document.getElementsByClassName("bomberman")[0]) : {}
@@ -177,6 +219,7 @@ document.addEventListener("keydown", (event) =>
 window.onload = () => {
     generateField(size);
     setInterval(moveEnemies, 800);
-    setInterval(()=>{gameLost ? window.location.reload() : {}}, 100);
-    setInterval(()=>{gameWon() ? alert("You won!") : {}}, 100);
+    setInterval(() => {
+        gameLost ? window.location.reload() : gameWon() ? window.location.reload() : {}
+    }, 100);
 };
