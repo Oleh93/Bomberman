@@ -216,10 +216,22 @@ document.addEventListener("keydown", (event) =>
                     event.which === 32 ? setBomb(document.getElementsByClassName("bomberman")[0]) : {}
 );
 
+const startGame = () => {
+    document.getElementById("field").style.display = "none";
+
+    document.getElementById("start-button").onclick = function(){
+        document.getElementById("options").style.display = "none";
+        document.getElementById("field").style.display = "";
+
+        generateField(size);
+        setInterval(moveEnemies, 800);
+        setInterval(() => {
+            gameLost ? window.location.reload() : gameWon() ? window.location.reload() : {}
+        }, 100);
+    }
+};
+
+
 window.onload = () => {
-    generateField(size);
-    setInterval(moveEnemies, 800);
-    setInterval(() => {
-        gameLost ? window.location.reload() : gameWon() ? window.location.reload() : {}
-    }, 100);
+    startGame();
 };
