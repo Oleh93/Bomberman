@@ -218,20 +218,25 @@ document.addEventListener("keydown", (event) =>
 
 const startGame = () => {
     document.getElementById("field").style.display = "none";
+    let startButton = document.getElementsByClassName("options__start-button")[0];
 
-    document.getElementById("start-button").onclick = function(){
-        document.getElementById("options").style.display = "none";
+    startButton.onclick = function () {
+        document.getElementsByClassName("options")[0].style.display = "none";
         document.getElementById("field").style.display = "";
 
         generateField(size);
         setInterval(moveEnemies, 800);
-        setInterval(() => {
-            gameLost ? window.location.reload() : gameWon() ? window.location.reload() : {}
-        }, 100);
-    }
-};
-
-
+        setInterval(function () {
+            if (gameWon()) {
+                window.location.reload();
+                alert("You won!");
+            }
+            if (gameLost) {
+                window.location.reload();
+                alert("You lost!");
+            }}, 100);
+        };
+    };
 window.onload = () => {
     startGame();
 };
