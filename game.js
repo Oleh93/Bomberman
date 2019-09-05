@@ -1,5 +1,6 @@
 let size = 15;
 let gameLost = false;
+let gamePaused = false;
 
 let gameWon = () => {
     return enemiesDead() && doorEntered()
@@ -43,6 +44,17 @@ let bombAvailable = () => {
         }
     }
     return true;
+};
+
+const startGame = () => {
+        let enemiesInterval = setInterval(moveEnemies, 800);
+        gamePaused = false;
+        return enemiesInterval;
+};
+
+const stopGame = (enemiesInterval) => {
+        clearInterval(enemiesInterval);
+        gamePaused = true;
 };
 
 const getRandomInt = (max) => Math.floor(Math.random() * (Math.floor(max) + 1));
@@ -208,15 +220,8 @@ const setBomb = (block) => {
     }
 };
 
-document.addEventListener("keydown", (event) =>
-    event.which === 39 ? moveRight(document.getElementsByClassName("bomberman")[0]) :
-        event.which === 37 ? moveLeft(document.getElementsByClassName("bomberman")[0]) :
-            event.which === 38 ? moveUp(document.getElementsByClassName("bomberman")[0]) :
-                event.which === 40 ? moveDown(document.getElementsByClassName("bomberman")[0]) :
-                    event.which === 32 ? setBomb(document.getElementsByClassName("bomberman")[0]) : {}
-);
 
-const startGame = () => {
+window.onload = () => {
     document.getElementById("field").style.display = "none";
     let startButton = document.getElementsByClassName("options__start-button")[0];
 
@@ -225,7 +230,19 @@ const startGame = () => {
         document.getElementById("field").style.display = "";
 
         generateField(size);
-        setInterval(moveEnemies, 800);
+
+        let enemiesInterval = setInterval(moveEnemies, 800);
+
+        document.addEventListener("keydown", (event) =>
+            event.which === 39 && !gamePaused ? moveRight(document.getElementsByClassName("bomberman")[0]) :
+                event.which === 37 && !gamePaused ? moveLeft(document.getElementsByClassName("bomberman")[0]) :
+                    event.which === 38 && !gamePaused ? moveUp(document.getElementsByClassName("bomberman")[0]) :
+                        event.which === 40 && !gamePaused ? moveDown(document.getElementsByClassName("bomberman")[0]) :
+                            event.which === 32 && !gamePaused ? setBomb(document.getElementsByClassName("bomberman")[0]) :
+                                event.which === 80 && gamePaused ? enemiesInterval = startGame(): event.which === 80 && !gamePaused ? stopGame(enemiesInterval):
+                                    event.which === 82 ? window.location.reload() : {}
+                                );
+
         setInterval(function () {
             if (gameWon()) {
                 window.location.reload();
@@ -235,8 +252,6 @@ const startGame = () => {
                 window.location.reload();
                 alert("You lost!");
             }}, 100);
-        };
     };
-window.onload = () => {
-    startGame();
+
 };
