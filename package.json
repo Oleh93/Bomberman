@@ -1,0 +1,17 @@
+{
+  "name": "bomberman-master",
+  "version": "1.0.0",
+  "description": "https://oleh93.github.io/Bomberman/ ## Тема проекту Реалізація гри Bomberman за допомогою чистого HTML, CSS та JS, без використання сторонніх бібліотек.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "watch": "webpack --watch"
+  },
+  "author": "Oleg",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.8"
+  }
+}

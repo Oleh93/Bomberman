@@ -1,0 +1,42 @@
+Arguments: 
+  /usr/local/Cellar/node/12.4.0/bin/node /usr/local/Cellar/yarn/1.17.0/libexec/bin/yarn.js add -D webpack
+
+PATH: 
+  /Users/olehmykytyn/.npm-global/bin:/Users/olehmykytyn/.npm-global/bin:/usr/local/opt/sqlite/bin:/usr/local/opt/gettext/bin:/usr/local/opt/openssl/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/usr/local/opt/libarchive/bin:/usr/local/opt/libarchive/bin:/usr/local/opt/libarchive/bin:/usr/local/opt/openssl/bin:/opt/local/bin:/opt/local/sbin:/usr/local/opt/icu4c/sbin:/usr/local/opt/icu4c/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/olehmykytyn/WebstormProjects/Bomberman/node_modules/.bin
+
+Yarn version: 
+  1.17.0
+
+Node version: 
+  10.16.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: EACCES: permission denied, mkdir '/Users/olehmykytyn/WebstormProjects/Bomberman/node_modules/global-prefix/node_modules'
+
+npm manifest: 
+  {
+    "name": "bomberman-master",
+    "version": "1.0.0",
+    "description": "https://oleh93.github.io/Bomberman/ ## Тема проекту Реалізація гри Bomberman за допомогою чистого HTML, CSS та JS, без використання сторонніх бібліотек.",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "build": "webpack",
+      "watch": "webpack --watch"
+    },
+    "author": "Oleg",
+    "license": "ISC",
+    "devDependencies": {
+      "webpack": "^4.39.3",
+      "webpack-cli": "^3.3.8"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
