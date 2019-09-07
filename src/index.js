@@ -4,7 +4,7 @@ import {generateField, size, gameLost, gamePaused,
 document.getElementById("field").style.display = "none";
 let startButton = document.getElementsByClassName("options__start-button")[0];
 
-startButton.onclick = function () {
+startButton.onclick = () => {
     document.getElementsByClassName("options")[0].style.display = "none";
     document.getElementById("field").style.display = "";
 
@@ -22,7 +22,7 @@ startButton.onclick = function () {
                                 event.which === 82 ? window.location.reload() : {}
     );
 
-    setInterval(function () {
+    setInterval( () => {
         if (gameWon()) {
             window.location.reload();
             alert("You won!");

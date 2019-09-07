@@ -1,5 +1,6 @@
 # Bomberman
-https://oleh93.github.io/Bomberman/
+[Play](https://oleh93.github.io/Bomberman/)
+
 ## Тема проекту
 Реалізація гри Bomberman за допомогою чистого HTML, CSS та JS, без використання сторонніх бібліотек.
 
